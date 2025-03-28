@@ -5,6 +5,8 @@ const inputFile = process.argv[2];
 const outputDir = path.join(__dirname, "resultado"); // Pasta fixa "resultado"
 const outputFile = path.join(outputDir, "FMB_load_sample.txt");
 
+const requiredVersion = "1.0"; // Versão esperada
+
 async function checkFileExists(filePath) {
     try {
         await fs.access(filePath);
@@ -20,6 +22,10 @@ async function readJSON() {
 
         const data = await fs.readFile(inputFile, "utf8");
         const jsonData = JSON.parse(data);
+
+        if (!jsonData.version || jsonData.version !== requiredVersion) {
+            throw new Error(`Erro: Versão inválida. Esperado: ${requiredVersion}, Encontrado: ${jsonData.version}`);
+        }
 
         return jsonData;
     } catch (error) {
@@ -60,5 +66,4 @@ async function main() {
     }
 }
 
-// Chama a função principal
 main();
