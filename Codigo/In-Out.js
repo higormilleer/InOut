@@ -1,12 +1,10 @@
 const fs = require("fs").promises;
 const path = require("path");
 
-// Caminhos dos arquivos
-const inputFile = process.argv[2]; // O arquivo JSON será passado como argumento
+const inputFile = process.argv[2];
 const outputDir = path.join(__dirname, "resultado"); // Pasta fixa "resultado"
-const outputFile = path.join(outputDir, "FMB_load_sample.txt"); // Nome fixo do arquivo de saída
+const outputFile = path.join(outputDir, "FMB_load_sample.txt");
 
-// Função para verificar se o arquivo existe
 async function checkFileExists(filePath) {
     try {
         await fs.access(filePath);
@@ -15,7 +13,7 @@ async function checkFileExists(filePath) {
     }
 }
 
-// Função para ler e validar o conteúdo do arquivo JSON
+// Funcao para ler e validar o conteudo do arquivo "JSON"
 async function readJSON() {
     try {
         await checkFileExists(inputFile);
@@ -30,12 +28,12 @@ async function readJSON() {
     }
 }
 
-// Função para formatar o JSON em um formato de texto mais legível
+// Funcao para formatar o "JSON" em um formato de texto mais facil de ser lido
 function formatJsonToText(jsonData) {
     return JSON.stringify(jsonData, null, 2); // Converte o JSON para texto de forma formatada
 }
 
-// Função principal para executar o processo
+// Funcao principal para executar o processo
 async function main() {
     if (!inputFile) {
         console.error("Erro: O caminho do arquivo JSON de entrada deve ser fornecido.");
@@ -53,7 +51,7 @@ async function main() {
     const jsonData = await readJSON();
     const output = formatJsonToText(jsonData);
 
-    // Escrever o conteúdo formatado no arquivo TXT dentro da pasta "resultado"
+    // esta funcao escreve o conteudo formatado no arquivo "TXT" dentro da pasta "resultado"
     try {
         await fs.writeFile(outputFile, output, "utf8");
         console.log(`✅ Arquivo salvo em: "${outputFile}"`);
